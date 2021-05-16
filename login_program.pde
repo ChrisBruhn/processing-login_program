@@ -1,10 +1,16 @@
+
+// hent gui interface
 import controlP5.*;
+// variable til at styre login
 boolean loggedin = false;
 
+// deklaration af to controlP5 vars. En til hvert vindue
 ControlP5 cp5,cp5login;
+
+// 
 View view;
 
-PWindow win,LoginWindow;
+PWindow LoginWindow;
 
 
 public void settings() {
@@ -27,9 +33,10 @@ void draw() {
   
   println(loggedin);
   if (loggedin) {
-    view.drawGUI();
-    view.youAreLoggedIn();
   background(0,0,255);
+    
+    view.youAreLoggedIn();
+  
   } else {
     //loginPage.drawGUI();
   background(255, 0, 0);      
