@@ -5,10 +5,10 @@ import controlP5.*;
 boolean loggedin = false;
 
 // deklaration af to controlP5 vars. En til hvert vindue
-ControlP5 cp5,cp5login;
+ControlP5 cp5, cp5login;
 
 // 
-View view;
+
 
 PWindow LoginWindow;
 
@@ -22,24 +22,21 @@ void setup() {
   LoginWindow = new PWindow();
   cp5login = new ControlP5(LoginWindow);
   cp5 = new ControlP5(this);
-  view = new View();
-  
-  
+
 }
 
 void draw() {
 
   fill(255);
+
   
-  println(loggedin);
   if (loggedin) {
-  background(0,0,255);
-    
-    view.youAreLoggedIn();
-  
+    background(0, 0, 255);
+   text("Now, you are logged in!",100,100);
+
   } else {
     //loginPage.drawGUI();
-  background(255, 0, 0);      
-    view.youAreNOTLoggedIn();
+    background(255, 0, 0);      
+   text("You are NOT logged in!",100,100);
   }
 }
