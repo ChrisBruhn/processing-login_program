@@ -1,7 +1,11 @@
-class PWindow extends PApplet { //<>//
+//<>// //<>//
+class PWindow extends PApplet {
   PFont font;
 
-  Button loginB;
+
+  UserIO uio = new UserIO(); 
+
+  Button loginB, newUser;
   Textfield username, userpass;
   // til at finde midten med
   float x;
@@ -18,85 +22,121 @@ class PWindow extends PApplet { //<>//
 
   void setup() {
     background(150);
+    fill(255);
+
     font = createFont("Arial", 18);
     // til at finde midten med
-    x = width/2-50;
+    x = width/2-105;
 
     cp5login.addTextfield("userName")
       .setPosition(x, 20)
-      .setSize(100, 30)
+      .setSize(210, 30)
       .setFont(font)
       .setFocus(true)
-      .setColor(color(255, 0, 0))
+      .setColor(color(255, 255, 255))
       ;
 
     cp5login.addTextfield("password")
       .setPosition(x, 75)
-      .setSize(100, 30)
+      .setSize(210, 30)
       .setFont(font)
       .setFocus(true)
       .setPasswordMode(true)
-      .setColor(color(255, 0, 0))
+      .setColor(color(255, 255, 255))
       ;
 
-    loginB = cp5login.addButton("loggin_On");
+    loginB = cp5login.addButton("loggin_In");
     loginB.setPosition(x, 140)
       .setSize(100, 40)
       .setFont(font)
       .setLabel("Login");
+
+    newUser = cp5login.addButton("newUser");
+    newUser.setPosition(x+110, 140)
+      .setSize(100, 40)
+      .setFont(font)
+      .setLabel("New user");
   }
 
   void draw() {
-       //background(150);
-
   }
 
+  // tilføj bruger
+  void newUser() {
 
+    //uio.loadUserData();
+
+    User u = new User(getUserNamePass()); //<>//
+    
+    if (u.getUserName().isEmpty() == true)
+    {
+      println("Enter username");
+      text("Enter username: ",10,40);
+    }
+
+    if (u.getPassword().isEmpty() == true)
+    {
+      println("Enter password");
+      text("Enter password: ",10,95);
+    }
+
+    if ((u.getUserName().isEmpty() == false) && (u.getPassword().isEmpty() == false)) {
+      uio.display();
+      uio.addUserToList(u);
+      uio.saveUserData();
+    }
+  }
 
   // funktion som skal kontrollere bruger navn og password
-  void loggin_On() {
+  void loggin_In() {
+   
+    
+    // create a user from login info
+    User u = new User(getUserNamePass());
+    
+    if (u.getUserName().isEmpty() == true)
+    {
+      println("Enter username");
+      text("Enter username: ",10,40);
+    }
 
-    //
-    //
-    if (getUserName().isEmpty() == true || getUserPass().isEmpty() == true){
-    if (getUserName().isEmpty() == true) {
-      text("Pls enter username:", 20, 40);
+    if (u.getPassword().isEmpty() == true)
+    {
+      println("Enter password");
+      text("Enter password: ",10,95);
+    }
+    
+    
+    if (uio.checkUserName(u)== false){
+    text("Its not a valid combination of username and password",20,20 );
+    }
+    
+    // if the user i not empty and exsist i database
+    if (uio.checkUserName(u) && u.getUserName().isEmpty() == false &&  u.getPassword().isEmpty() == false)
+    {
+      loggedin = true;
+      myExit();
     } else
     {
-      String un = getUserName();
+      loggedin= false;
+    
     }
-
-    if (getUserPass().isEmpty() == true) {
-      text("Pls enter password:", 20, 95);
-    } else
-    {
-      String pass = getUserPass();
-    }
-    }
-    /*
-    if (loggedin == true)
-     {
-     loggedin = false;
-     } else
-     {
-     loggedin=true;
-     }
-     myExit();
-     */
   }
 
-
-
-  void myExit()
-  {
+  void myExit() {
     surface.setVisible(false);
   }
 
 
-  String getUserName() {
+  String[] getUserNamePass() {
+    String un = getUserName();
+    String ps = getUserPass();
+    String[] s =  {un, ps};
+    return s;
+  }
 
+  String getUserName() {
     String s =   cp5login.get(Textfield.class, "userName").getText();
-    //println(s);
     return s;
   }
 

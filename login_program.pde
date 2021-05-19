@@ -1,6 +1,6 @@
-
 // hent gui interface
 import controlP5.*;
+
 // variable til at styre login
 boolean loggedin = false;
 
@@ -18,25 +18,20 @@ public void settings() {
 }
 
 void setup() { 
-  textSize(14);
+  textSize(18);
+  fill(255);
   LoginWindow = new PWindow();
   cp5login = new ControlP5(LoginWindow);
   cp5 = new ControlP5(this);
-
 }
 
 void draw() {
-
-  fill(255);
-
-  
   if (loggedin) {
     background(0, 0, 255);
-   text("Now, you are logged in!",100,100);
-
+    text("Now, you are logged in!", 100, 100);
   } else {
     //loginPage.drawGUI();
     background(255, 0, 0);      
-   text("You are NOT logged in!",100,100);
+    text("You are NOT logged in!", 100, 100);
   }
 }
