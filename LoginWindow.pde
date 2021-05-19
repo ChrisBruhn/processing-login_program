@@ -1,4 +1,4 @@
-//<>// //<>//
+//<>// //<>// //<>//
 class PWindow extends PApplet {
   PFont font;
 
@@ -63,54 +63,40 @@ class PWindow extends PApplet {
 
   // tilføj bruger
   void newUser() {
+    User u = new User(getUserNamePass());
 
-    //uio.loadUserData();
-
-    User u = new User(getUserNamePass()); //<>//
-    
     if (u.getUserName().isEmpty() == true)
     {
-      println("Enter username");
-      text("Enter username: ",10,40);
-    }
-
-    if (u.getPassword().isEmpty() == true)
+      text("Enter username: ", 10, 40);
+    } else if (u.getPassword().isEmpty() == true)
     {
-      println("Enter password");
-      text("Enter password: ",10,95);
+            text("Enter password: ", 10, 95);
     }
-
-    if ((u.getUserName().isEmpty() == false) && (u.getPassword().isEmpty() == false)) {
-      uio.display();
+    else if (!uio.checkUserName(u)) {
       uio.addUserToList(u);
       uio.saveUserData();
+      uio.display();
     }
   }
-
-  // funktion som skal kontrollere bruger navn og password
+  //  der er to gange kode som tester om der er indput i min streng
   void loggin_In() {
-   
-    
-    // create a user from login info
+    // create a temp user from login info
     User u = new User(getUserNamePass());
-    
-    if (u.getUserName().isEmpty() == true)
+
+    if (u.getUserName().isEmpty() == true) //<>//
     {
-      println("Enter username");
-      text("Enter username: ",10,40);
+      text("Enter username: ", 10, 40);
     }
 
-    if (u.getPassword().isEmpty() == true)
+    else if (u.getPassword().isEmpty() == true)
     {
-      println("Enter password");
-      text("Enter password: ",10,95);
+            text("Enter password: ", 10, 95);
     }
-    
-    
-    if (uio.checkUserName(u)== false){
-    text("Its not a valid combination of username and password",20,20 );
+
+    else if (uio.checkUserName(u)== false) {
+      text("Its not a valid combination of username and password", 20, 20 );
     }
-    
+
     // if the user i not empty and exsist i database
     if (uio.checkUserName(u) && u.getUserName().isEmpty() == false &&  u.getPassword().isEmpty() == false)
     {
@@ -119,7 +105,6 @@ class PWindow extends PApplet {
     } else
     {
       loggedin= false;
-    
     }
   }
 
@@ -136,7 +121,7 @@ class PWindow extends PApplet {
   }
 
   String getUserName() {
-    String s =   cp5login.get(Textfield.class, "userName").getText();
+    String s = cp5login.get(Textfield.class, "userName").getText();
     return s;
   }
 
